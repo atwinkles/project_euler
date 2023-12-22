@@ -2,43 +2,35 @@
 #include <cmath>
 #include <chrono>
 
-int solOne(long value) {
-    int maximum = 0;
-    long i = value;
-    for (int j=2;j<std::floor(std::sqrt(value));j++) {
-        while ( i % j == 0 ) {
-            i = i / j;
-            if ( j > maximum ) {
-                maximum = j;
-            }
-        }
-        
+bool isPrime(int num) {
+    if(num < 2) return false;
+    if(num == 2) return true;
+    if(num % 2 == 0) return false;
+    for(int i=3; (i*i)<=num; i+=2){
+        if(num % i == 0 ) return false;
     }
-    return maximum;
+    return true;
 }
 
-// Uses a Sieve of Eratosthenes to compute primes for fun - super inefficient
-int solTwo(long value) {
-    long max = std::sqrt(value);
-    int solution = 0;
-    std::vector<bool> sieve(value-1, true);
-    for ( int i = 2; i <= max; i++ ) {
-        if ( sieve[i-2] ) {
-            if ( value % i == 0 && i > solution ) {
-                solution = i;
-            }
-            for (int j = i*i; j <= value; j += i) {
-                sieve[j-2] = false;
-            }
+int solOne(long value) {
+    int total = 0;
+    for ( int i = 2; i < value; i++ ) {
+        if (isPrime(i)) {
+            // convert to binary
+            // rotate number
         }
     }
-    return solution;
+    return 0;
+}
+
+int solTwo(long value) {
+    return 0;
 }
 
 int main()
 {
     std::chrono::steady_clock::time_point beginOne = std::chrono::steady_clock::now();
-    long sumOne = solOne(600851475143);
+    int sumOne = solOne(100);
     std::cout << sumOne;
     std::chrono::steady_clock::time_point endOne = std::chrono::steady_clock::now();
     std::cout << "\nTime to compute: " << std::chrono::duration_cast<std::chrono::microseconds>(endOne - beginOne).count() << "[µs]" << std::endl;
